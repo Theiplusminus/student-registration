@@ -59,7 +59,7 @@
       background-color: #45a049;
     }
     .student-list {
-      max-width: 600px;
+      max-width: 800px;
       margin: 20px auto;
       background: white;
       padding: 20px;
@@ -70,33 +70,106 @@
       text-align: center;
       margin-bottom: 20px;
     }
-    .student-list ul {
-      list-style: none;
-      padding: 0;
+    table {
+      width: 100%;
+      border-collapse: collapse;
     }
-    .student-list li {
+    th, td {
+      border: 1px solid #ccc;
       padding: 10px;
-      border-bottom: 1px solid #ccc;
+      text-align: left;
     }
-    .banner {
-      text-align: center;
-      margin: 20px auto;
-    }
-    .banner img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 10px;
+    th {
+      background-color: #4caf50;
+      color: white;
     }
   </style>
 </head>
 <body>
+  <script type="module">
+    // Import Firebase SDKs
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCVS5kWvbnnMBcs0q8DGOSbD9mkwSUPrvY",
+      authDomain: "student-registration-fa0a1.firebaseapp.com",
+      databaseURL: "https://student-registration-fa0a1-default-rtdb.firebaseio.com",
+      projectId: "student-registration-fa0a1",
+      storageBucket: "student-registration-fa0a1.appspot.com",
+      messagingSenderId: "946457557327",
+      appId: "1:946457557327:web:0d44e0dce6d1a4969bed3a",
+      measurementId: "G-DKXWRPK3VG"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    // References
+    const studentsRef = ref(database, "students");
+
+    // Handle form submission
+    const form = document.getElementById('studentForm');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const studentClass = document.getElementById('class').value;
+      const school = document.getElementById('school').value;
+      const address = document.getElementById('address').value;
+      const email = document.getElementById('email').value;
+
+      // Save to Firebase
+      push(studentsRef, {
+        name,
+        studentClass,
+        school,
+        address,
+        email
+      });
+
+      form.reset(); // Clear the form
+    });
+
+    // Display registered students
+    const studentList = document.getElementById('studentList');
+    onValue(studentsRef, (snapshot) => {
+      const students = snapshot.val();
+      let tableContent = `
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Class</th>
+              <th>School</th>
+              <th>Address</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+      for (const id in students) {
+        const student = students[id];
+        tableContent += `
+          <tr>
+            <td>${student.name}</td>
+            <td>${student.studentClass}</td>
+            <td>${student.school}</td>
+            <td>${student.address}</td>
+            <td>${student.email}</td>
+          </tr>
+        `;
+      }
+      tableContent += `</tbody></table>`;
+      studentList.innerHTML = tableContent;
+    });
+  </script>
+
   <div class="header">
     <h1>Winter Arc For CBSE 10th and 12th Board Preparation</h1>
-    <p>Test your preparation with curated questions for top 2025 board results.</p>
-  </div>
-
-  <div class="banner">
-    <img src="pexels-jeswin-3380743.jpg" alt="Board Preparation Banner">
+    <p>Test your preparation with curated questions for the 2025 board exams.</p>
   </div>
 
   <div class="form-container">
@@ -113,31 +186,7 @@
 
   <div class="student-list">
     <h3>Registered Students</h3>
-    <ul id="studentList"></ul>
+    <div id="studentList"></div>
   </div>
-
-  <script>
-    const form = document.getElementById('studentForm');
-    const studentList = document.getElementById('studentList');
-
-    form.addEventListener('submit', function (e) {
-      e.preventDefault(); // Prevent page refresh
-
-      // Get form values
-      const name = document.getElementById('name').value;
-      const studentClass = document.getElementById('class').value;
-      const school = document.getElementById('school').value;
-      const address = document.getElementById('address').value;
-      const email = document.getElementById('email').value;
-
-      // Add student to the list
-      const listItem = document.createElement('li');
-      listItem.textContent = `Name: ${name}, Class: ${studentClass}, School: ${school}, Email: ${email}`;
-      studentList.appendChild(listItem);
-
-      // Reset the form
-      form.reset();
-    });
-  </script>
 </body>
 </html>
