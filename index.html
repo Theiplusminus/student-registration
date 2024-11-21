@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Winter Arc - CBSE Board Preparation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+    .header {
+      text-align: center;
+      background-color: #4caf50;
+      color: white;
+      padding: 20px 0;
+    }
+    .header h1 {
+      margin: 0;
+    }
+    .header p {
+      margin: 10px 0;
+      font-size: 1.2em;
+    }
+    .form-container {
+      max-width: 600px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-container input, 
+    .form-container textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.2em;
+      cursor: pointer;
+    }
+    .form-container button:hover {
+      background-color: #45a049;
+    }
+    .student-list {
+      max-width: 600px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .student-list h3 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .student-list ul {
+      list-style: none;
+      padding: 0;
+    }
+    .student-list li {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    .banner {
+      text-align: center;
+      margin: 20px auto;
+    }
+    .banner img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Winter Arc For CBSE 10th and 12th Board Preparation</h1>
+    <p>Test your preparation with curated questions for top 2025 board results.</p>
+  </div>
+
+  <div class="banner">
+    <img src="https://via.placeholder.com/800x300?text=Board+Preparation" alt="Board Preparation Banner">
+  </div>
+
+  <div class="form-container">
+    <h2>Register Now</h2>
+    <form id="studentForm">
+      <input type="text" id="name" placeholder="Enter Name" required>
+      <input type="text" id="class" placeholder="Enter Class (e.g., 10th, 12th)" required>
+      <input type="text" id="school" placeholder="Enter School Name" required>
+      <textarea id="address" placeholder="Enter Home Address" required></textarea>
+      <input type="email" id="email" placeholder="Enter Email" required>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div class="student-list">
+    <h3>Registered Students</h3>
+    <ul id="studentList"></ul>
+  </div>
+
+  <script>
+    const form = document.getElementById('studentForm');
+    const studentList = document.getElementById('studentList');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault(); // Prevent page refresh
+
+      // Get form values
+      const name = document.getElementById('name').value;
+      const studentClass = document.getElementById('class').value;
+      const school = document.getElementById('school').value;
+      const address = document.getElementById('address').value;
+      const email = document.getElementById('email').value;
+
+      // Add student to the list
+      const listItem = document.createElement('li');
+      listItem.textContent = `Name: ${name}, Class: ${studentClass}, School: ${school}, Email: ${email}`;
+      studentList.appendChild(listItem);
+
+      // Reset the form
+      form.reset();
+    });
+  </script>
+</body>
+</html>
